@@ -1,12 +1,13 @@
-#include <iostream>
+#pragma warning(disable: 6031)
+#define _CRT_SECURE_NO_WARNINGS
+#include <cstdio>
+#include "graph.h"
 
 using namespace std;
 
 int main()
 {
-	cout << "Hello!" << endl;
-	cout << "GitHub" << endl;
-	cout << "Last commit" << endl;
+	
 
 	return 0;
 }
