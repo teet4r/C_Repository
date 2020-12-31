@@ -4,25 +4,24 @@
 #include <algorithm>
 //#include "graph.h"
 
-//using namespace std;
+#define MAX 25
+using namespace std;
 
 typedef struct Point {
 	int x, y;
 } Point;
 
-int T;
-int m, n, k;
-Point p;
-int area[50][50];
-Point visited[2501];
-int check, cnt;
+int N;
+int danji[MAX * MAX];
+int map[MAX][MAX];
+Point pList[MAX * MAX];
+int cnt;
 
 void DFS(int x, int y)
 {
-	if (x >= 0 && x < m && y >= 0 && y < n &&
-		area[y][x] == 1) {
-		check++;
-		area[y][x] = 0;
+	if (x >= 0 && x < N && y >= 0 && y < N && map[y][x] == 1) {
+		map[y][x] = 0;
+		cnt++;
 		DFS(x - 1, y);
 		DFS(x + 1, y);
 		DFS(x, y - 1);
@@ -32,23 +31,32 @@ void DFS(int x, int y)
 
 int main()
 {
-	scanf("%d", &T);
-	while (T--) {
-		scanf("%d%d%d", &m, &n, &k);
-		for (int i = 0; i < k; i++) {
-			scanf("%d%d", &p.x, &p.y);
-			visited[i] = p;
-			area[p.y][p.x] = 1;
+	int k = 0, l = 0;
+
+	scanf("%d", &N);
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++) {
+			scanf("%1d", &map[i][j]);
+
+			if (map[i][j] == 1) {
+				pList[k].x = j;
+				pList[k].y = i;
+				k++;
+			}
 		}
-		for (int i = 0; i < k; i++) {
-			DFS(visited[i].x, visited[i].y);
-			if (check > 0)
-				cnt++;
-			check = 0;
-		}
-		printf("%d\n", cnt);
-		cnt = 0;
 	}
+
+	for (int i = 0; i < k; i++) {
+		DFS(pList[i].x, pList[i].y);
+		if (cnt) {
+			danji[l++] = cnt;
+			cnt = 0;
+		}
+	}
+	sort(danji, danji + l);
+	printf("%d\n", l);
+	for (int i = 0; i < l; i++)
+		printf("%d\n", danji[i]);
 	
 	return 0;
 }
